@@ -1,3 +1,6 @@
+import {
+  getImagesUrls
+} from '../utils/giteeOper.js';
 // const images = [
 //   {
 //     img: 'https://cdn-we-retail.ym.tencent.com/tsr/home/v2/banner1.png',
@@ -35,5 +38,11 @@ const images = [
 ];
 
 export function genSwiperImageList() {
-  return images;
+  getImagesUrls("images").then(urls => {
+    ret =   urls;
+    console.log('Swiper Image List: ', urls);
+  })
+    .catch(error => {
+      console.error('Error: ', error)
+    })
 }

@@ -1,6 +1,7 @@
 import { fetchHome } from '../../services/home/home';
 import { fetchGoodsList } from '../../services/good/fetchGoods';
 import Toast from 'tdesign-miniprogram/toast/index';
+import { getImagesUrls } from '../../utils/giteeOper.js';
 
 Page({
   data: {
@@ -54,14 +55,31 @@ Page({
     this.setData({
       pageLoading: true,
     });
-    fetchHome().then(({ swiper, tabList }) => {
+    // fetchHome().then(({ swiper, tabList }) => {
+    //   this.setData({
+    //     tabList,
+    //     imgSrcs: swiper,
+    //     pageLoading: false,
+    //   });
+    //   //this.loadGoodsList(true);
+    // });
+    getImagesUrls("images").then((imgs_url) => {
+      console.log(imgs_url)
       this.setData({
-        tabList,
-        imgSrcs: swiper,
-        pageLoading: false,
-      });
-      this.loadGoodsList(true);
+        imgSrcs: imgs_url,
+      })
     });
+    
+    
+    // getImagesUrls("images").then(urls => {
+    //   console.log('Swiper Image List: ', urls);
+    //   this.setData({
+    //     imgSrcs: urls
+    //   })
+    // })
+    // .catch(error => {
+    //   console.error('Error: ', error)
+    // })
   },
 
   tabChangeHandle(e) {

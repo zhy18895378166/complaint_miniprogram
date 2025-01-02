@@ -3,6 +3,8 @@ import {
   cdnBase
 } from '../../config/index';
 
+import { getImagesUrls } from '../../utils/giteeOper.js';
+
 /** 获取首页数据 */
 function mockFetchHome() {
   const {
@@ -50,10 +52,15 @@ function mockFetchHome() {
 
 /** 获取首页数据 */
 export function fetchHome() {
-  if (config.useMock) {
-    return mockFetchHome();
+  // if (config.useMock) {
+  //   return mockFetchHome();
+  // }
+  // return new Promise((resolve) => {
+  //   resolve('real api');
+  // });
+  //return getImagesUrls("images")
+  return {
+    swiper: getImagesUrls("images"),
+    tabList: []
   }
-  return new Promise((resolve) => {
-    resolve('real api');
-  });
 }
