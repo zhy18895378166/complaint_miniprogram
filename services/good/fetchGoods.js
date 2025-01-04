@@ -1,4 +1,5 @@
 import { config } from '../../config/index';
+import { requestAsync, getImagesUrls } from '../../utils/giteeOper.js';
 
 /** 获取商品列表 */
 function mockFetchGoodsList(pageIndex = 1, pageSize = 20) {
@@ -18,12 +19,30 @@ function mockFetchGoodsList(pageIndex = 1, pageSize = 20) {
   );
 }
 
+async function fetchHomeListFromCloud(pageIndex = 1, pageSize = 20) {
+  let goods_list = []
+  //wx.cloud.database().collection("problems_category").add({data: allGoods[0]})
+  //await wx.cloud.database().collection("homelist").add({data: good})
+  await wx.cloud.database().collection("homelist").get().then((res) => {
+    console.log("xxxxx",res)
+    res.data.map((item) => {
+      goods_list.push({
+              spuId: item.spuId,
+              thumb: item.primaryImage,
+              title: item.title,
+      })
+    })
+  })
+  console.log("goods_list:", goods_list)
+  return goods_list
+}
+
 /** 获取商品列表 */
 export function fetchGoodsList(pageIndex = 1, pageSize = 20) {
   if (config.useMock) {
     return mockFetchGoodsList(pageIndex, pageSize);
   }
   return new Promise((resolve) => {
-    resolve('real api');
+    resolve(fetchHomeListFromCloud(pageIndex, pageSize));
   });
 }

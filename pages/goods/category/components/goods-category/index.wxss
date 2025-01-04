@@ -1,3 +1,7 @@
+.category-add {
+  font-size: 25rpx;
+}
+
 .goods-category {
   display: flex;
 }

@@ -20,7 +20,7 @@
 }
 
 .bottom-operate-left .icon-warp {
-  width: 50%;
+  width: 100%;
 }
 
 .tag-cart-num {

@@ -46,7 +46,7 @@
 				  price="{{goods.originPrice}}"
 				  type="delthrough"
 				/>
-				<t-icon
+				<!-- <t-icon
 				  class="goods-card__add-cart"
 				  prefix="wr"
 				  name="cartAdd"
@@ -55,7 +55,7 @@
 				  catchtap="addCartHandle"
 				  size="48rpx"
 				  color="#FA550F"
-				/>
+				/> -->
 			</view>
 		</view>
 	</view>

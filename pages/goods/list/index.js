@@ -124,8 +124,9 @@ Page({
     });
   },
 
-  onLoad() {
-    this.init(true);
+  onLoad(e) {
+    console.log("jump to this page", e)
+    //this.init(true);
   },
 
   onReachBottom() {

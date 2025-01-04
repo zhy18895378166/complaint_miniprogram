@@ -31,3 +31,19 @@ export async function getImagesUrls(path) {
     return []
   }
 }
+
+export async function getImagesAndVideos(folder_name) {
+  const img_path = `images/${folder_name}`
+  const video_path = `videos/${folder_name}`
+  try {
+    const img_urls = await requestAsync(img_path)
+    const videos_urls = await requestAsync(video_path)
+    //console.log('Swiper Image List: ', img_urls);
+    //return {image: img_urls, video: videos_urls}
+    return [img_urls, videos_urls]
+  } catch (error) {
+    console.error('Failed to fetch', error)
+    //return {image: [], video: []}
+    return [[], []]
+  }
+}

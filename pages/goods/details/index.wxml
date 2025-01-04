@@ -11,7 +11,7 @@
       list="{{details.images}}"
     ></t-swiper>
     <view class="goods-info">
-      <view class="goods-number">
+      <!-- <view class="goods-number">
         <view class="goods-price">
           <price
             wr-class="class-goods-price"
@@ -23,7 +23,7 @@
           <price wr-class="class-goods-del" price="{{maxLinePrice}}" type="delthrough" />
         </view>
         <view class="sold-num">已售{{soldNum}}</view>
-      </view>
+      </view> -->
       <view wx:if="{{activityList.length > 0}}" class="goods-activity" bindtap="showPromotionPopup">
         <view class="tags-container">
           <view wx:for="{{activityList}}" data-promotionId="{{item.promotionId}}" wx:key="index" wx:if="{{index<4}}">
@@ -37,18 +37,18 @@
       </view>
       <view class="goods-title">
         <view class="goods-name">{{details.title}}</view>
-        <view class="goods-tag">
+        <!-- <view class="goods-tag">
           <t-button open-type="share" t-class="shareBtn" variant="text">
             <view class="btn-icon">
               <t-icon name="share" size="40rpx" color="#000" />
               <view class="share-text">分享</view>
             </view>
           </t-button>
-        </view>
+        </view> -->
       </view>
       <view class="goods-intro">{{intro}}</view>
     </view>
-    <view class="spu-select" bindtap="showSkuSelectPopup">
+    <!-- <view class="spu-select" bindtap="showSkuSelectPopup">
       <view class="label">已选</view>
       <view class="content">
         <view class="{{!selectedAttrStr ? 'tintColor' : ''}}">
@@ -56,7 +56,7 @@
         </view>
         <t-icon name="chevron-right" size="40rpx" color="#BBBBBB" />
       </view>
-    </view>
+    </view> -->
     <view wx:if="{{ commentsStatistics.commentCount > 0 }}" class="comments-wrap">
       <view class="comments-head" bindtap="navToCommentsListPage">
         <view class="comments-title-wrap">
@@ -95,17 +95,21 @@
     <view wx:if="{{details.desc.length > 0}}" wx:for="{{details.desc}}" wx:key="index">
       <t-image t-class="desc-content__img" src="{{item}}" mode="widthFix" />
     </view>
+    
+    <view wx:if="{{details.videos.length > 0}}" wx:for="{{details.videos}}" wx:key="index">
+      <video class="video-attr" src="{{item}}"></video>
+    </view>
   </view>
   <view class="goods-bottom-operation">
     <buy-bar
       jumpArray="{{jumpArray}}"
-      soldout="{{soldout}}"
+      soldout="{{}}"
       isStock="{{isStock}}"
-      shopCartNum="{{cartNum}}"
-      buttonType="{{buttonType}}"
-      bind:toAddCart="toAddCart"
+      shopCartNum="{{}}"
+      buttonType="{{}}"
+      bind:toAddCart=""
       bind:toNav="toNav"
-      bind:toBuyNow="buyItNow"
+      bind:toBuyNow=""
       class="goods-details-card"
     />
   </view>

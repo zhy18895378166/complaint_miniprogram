@@ -1,7 +1,6 @@
 import { fetchHome } from '../../services/home/home';
 import { fetchGoodsList } from '../../services/good/fetchGoods';
 import Toast from 'tdesign-miniprogram/toast/index';
-import { getImagesUrls } from '../../utils/giteeOper.js';
 
 Page({
   data: {
@@ -36,9 +35,9 @@ Page({
   },
 
   onReachBottom() {
-    if (this.data.goodsListLoadStatus === 0) {
+    /*if (this.data.goodsListLoadStatus === 0) {
       this.loadGoodsList();
-    }
+    }*/
   },
 
   onPullDownRefresh() {
@@ -55,31 +54,15 @@ Page({
     this.setData({
       pageLoading: true,
     });
-    // fetchHome().then(({ swiper, tabList }) => {
-    //   this.setData({
-    //     tabList,
-    //     imgSrcs: swiper,
-    //     pageLoading: false,
-    //   });
-    //   //this.loadGoodsList(true);
-    // });
-    getImagesUrls("images").then((imgs_url) => {
-      console.log(imgs_url)
+
+    fetchHome().then((swiper) => {
+      console.log(swiper)
       this.setData({
-        imgSrcs: imgs_url,
-      })
+        imgSrcs: swiper,
+        pageLoading: false,
+      });
+      this.loadGoodsList(true);
     });
-    
-    
-    // getImagesUrls("images").then(urls => {
-    //   console.log('Swiper Image List: ', urls);
-    //   this.setData({
-    //     imgSrcs: urls
-    //   })
-    // })
-    // .catch(error => {
-    //   console.error('Error: ', error)
-    // })
   },
 
   tabChangeHandle(e) {
@@ -108,6 +91,7 @@ Page({
 
     try {
       const nextList = await fetchGoodsList(pageIndex, pageSize);
+      console.log("result: ",nextList)
       this.setData({
         goodsList: fresh ? nextList : this.data.goodsList.concat(nextList),
         goodsListLoadStatus: 0,
@@ -123,6 +107,7 @@ Page({
   goodListClickHandle(e) {
     const { index } = e.detail;
     const { spuId } = this.data.goodsList[index];
+    console.log("will jump to goods/detailes, index: %d, supid:%s", index, spuId)
     wx.navigateTo({
       url: `/pages/goods/details/index?spuId=${spuId}`,
     });

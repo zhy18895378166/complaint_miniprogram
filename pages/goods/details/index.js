@@ -5,6 +5,7 @@ import {
   getGoodsDetailsCommentList,
   getGoodsDetailsCommentsCount,
 } from '../../../services/good/fetchGoodsDetailsComments';
+import { getImagesAndVideos } from '../../../utils/giteeOper';
 
 import { cdnBase } from '../../../config/index';
 
@@ -55,12 +56,12 @@ Page({
         url: '/pages/home/home',
         iconName: 'home',
       },
-      {
+      /*{
         title: '购物车',
         url: '/pages/cart/index',
         iconName: 'cart',
         showCartNum: true,
-      },
+      },*/
     ],
     isStock: true,
     cartNum: 0,
@@ -308,8 +309,23 @@ Page({
   },
 
   getDetail(spuId) {
-    Promise.all([fetchGood(spuId), fetchActivityList()]).then((res) => {
+    fetchGood(spuId).then(res => {
+      console.log("getDetail: ", res)
+      getImagesAndVideos(res.desc_git_folder_path).then(([image, video]) => {
+        res.desc = image;
+        res.videos = video;
+        console.log("imgUrls:", image)
+        console.log("videoUrls:", video)
+        this.setData({
+          details: res,
+        })
+      })
+    })
+    
+
+    /*Promise.all([fetchGood(spuId), fetchActivityList()]).then((res) => {
       const [details, activityList] = res;
+      
       const skuArray = [];
       const {
         skuList,
@@ -347,7 +363,7 @@ Page({
         soldout: isPutOnSale === 0,
         soldNum,
       });
-    });
+    });*/
   },
 
   async getCommentsList() {
@@ -433,11 +449,12 @@ Page({
 
   onLoad(query) {
     const { spuId } = query;
+    console.log("[%s]: spuId: ", getCurrentPages()[1].route, spuId)
     this.setData({
       spuId: spuId,
     });
     this.getDetail(spuId);
-    this.getCommentsList(spuId);
-    this.getCommentsStatistics(spuId);
+    //this.getCommentsList(spuId);
+    //this.getCommentsStatistics(spuId);
   },
 });

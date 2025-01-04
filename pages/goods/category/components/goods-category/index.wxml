@@ -1,6 +1,7 @@
 <view class="goods-category custom-class">
 	<c-sidebar custom-class="custom-sidebar" bindchange="onParentChange" activeKey="{{activeKey}}">
-		<c-sidebar-item
+		<button type="primary" class="category-add" wx:if="{{isAdministrator}}">添加主分类</button>
+    <c-sidebar-item
 		  wx:for="{{ category }}"
 		  wx:key="index"
 		  title="{{ item.name }}"
@@ -8,6 +9,7 @@
 		/>
 	</c-sidebar>
 	<view class="goods-category__right">
+    <button type="primary" class="category-add" wx:if="{{isAdministrator}}">添加子分类</button>
 		<c-tabbar
 		  wx:if="{{isSlotRight}}"
 		  activeKey="{{subActiveKey}}"

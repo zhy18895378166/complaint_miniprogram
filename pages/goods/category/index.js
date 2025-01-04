@@ -17,7 +17,8 @@ Page({
   onShow() {
     this.getTabBar().init();
   },
-  onChange() {
+  onChange(e) {
+    console.log(e)
     wx.navigateTo({
       url: '/pages/goods/list/index',
     });
