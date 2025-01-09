@@ -1,1 +1,126 @@
 4521
+const cloud = wx.cloud
+const db = cloud.database()
+const mainCategoryColl = db.collection('mainCategory')
+const subCategoryColl = db.collection('subCategory')
+const productsColl = db.collection('allProducts')
+
+const debug = false
+
+// 上传图片
+async function uploadFile(filePath) {
+  const uploadResult = await cloud.uploadFile({
+    cloudPath: `categories/${Date.now()}-${Math.floor(Math.random(0, 1) * 1000)}${filePath.match(/\.[^.]+?$/)[0]}`, //${filePath.match(/\.[^.]+?$/)[0]} 匹配文件后缀
+    filePath: filePath
+  });
+  if (debug) console.log('Image uploaded:', uploadResult);
+  
+  /* 获取永久链接 */
+  const fileID = uploadResult.fileID;
+  const res = await cloud.getTempFileURL({fileList: [fileID]});
+  if (debug) console.log('Permanent link:', res.fileList[0].tempFileURL);
+  return res.fileList[0].tempFileURL;
+}
+
+//批量上传
+async function uploadFiles(filesPath) {
+  let urls = []
+  for (const path of filesPath) {
+    urls.push(await uploadFile(path))
+  }
+  return urls
+}
+
+
+// 添加主分类函数
+export async function addMainCategory(groupId, name) {
+  try {
+    const mainCategoryData = {
+      groupId,
+      name,
+      createdAt: new Date()
+    };
+
+    // 上传主分类数据到云数据库
+    await mainCategoryColl.add({data: mainCategoryData});
+    
+    console.log('主分类添加成功');
+  } catch (error) {
+    console.error('添加主分类失败', error);
+  }
+}
+
+// 添加子分类函数
+export async function addSubCategory(name, filePath, productIds, mainCategoryId) {
+  try {
+    // 上传子类封面图片
+    const coverURL = await uploadFile(filePath)
+    //const coverURL = (await uploadFiles([filePath]))[0]
+    
+    const subCategoryData = {
+      name,
+      cover: coverURL,
+      productIds,
+      mainCategoryId,
+      createdAt: new Date()
+    };
+    
+    // 上传子分类数据到云数据库
+    await subCategoryColl.add({data: subCategoryData});
+
+    console.log('子分类添加成功');
+  } catch (error) {
+    console.error('添加子分类失败', error);
+  }
+}
+
+// 生成不重复的商品ID
+function generateUniqueId(existingIds) {
+  let newId;
+  do {
+    newId = Math.floor(Math.random() * 1000000).toString();
+  } while (existingIds.includes(newId));
+  return newId;
+}
+
+// 添加商品函数
+export async function addProduct(category, name, coverFilePath,imgPaths, videoPaths) {
+  try {
+    // 获取已有商品编号
+    const res = await productsColl.field({
+      id: true // 只获取id字段
+    }).get()
+    const existingIds = res.data.map(item => item.id);
+    //console.log(existingIds)
+
+    // 生成不重复的商品ID
+    const newId = generateUniqueId(existingIds);
+    
+    // 上传商品封面
+    const coverURL = await uploadFile(coverFilePath)
+    
+    // 上传商品详情图片和视频
+    const imgURLs = await uploadFiles(imgPaths)
+    const videoURLs = await uploadFiles(videoPaths)
+    
+    // 构建商品数据
+    const productData = {
+      id: newId,
+      category,
+      name,
+      cover: coverURL,
+      image: imgURLs,
+      video: videoURLs,
+      createdAt: new Date()
+    };
+    
+    // 上传商品数据到云数据库
+    await productsColl.add({data: productData});
+    
+    console.log('商品添加成功');
+  } catch (error) {
+    console.error('添加商品失败', error);
+  }
+}
+
+only test js
