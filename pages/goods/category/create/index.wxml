@@ -1,0 +1,44 @@
+<view class="page-container">
+  <!-- 子分类添加 -->
+  <view wx:if="{{isSubCategoryAdd}}" class="comment-card">
+    <base mainCategoriesName="{{mainCategoriesName}}" bind:fromSon="selectedMainCategoryName"/>
+    <!-- <t-input placeholder="请输入文字">
+      <view slot="label" class="custom-label">主分类</view>
+    </t-input> -->
+    <t-input placeholder="请输入文字" bind:change="onTextAreaChange">
+      <view slot="label" class="custom-label">子分类</view>
+    </t-input>
+
+    <!-- 上传问题封面图片，仅一张 -->
+    <view class="upload-container">
+      <view>选择封面图片</view>
+      <t-upload
+        media-type="{{['image']}}"
+        max="{{1}}"
+        files="{{uploadFiles}}"
+        bind:remove="handleRemove"
+        bind:success="handleSuccess"
+        gridConfig="{{gridConfig}}"
+        imageProps="{{imageProps}}"
+      />
+    </view>
+  </view>
+
+  <!-- 主分类添加 -->
+  <view wx:if="{{!isSubCategoryAdd}}" class="comment-card">
+    <t-input placeholder="请输入文字" bind:change="onTextAreaChange">
+      <view slot="label" class="custom-label">主分类</view>
+    </t-input>
+  </view>
+</view>
+
+<view class="submit-button-container">
+  <t-button
+    content="提交"
+    block
+    shape="round"
+    t-class="submit-button{{isAllowedSubmit ? '' : '-disabled'}}"
+    bind:tap="onSubmitBtnClick"
+  />
+</view>
+<t-toast id="t-toast" />

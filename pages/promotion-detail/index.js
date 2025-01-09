@@ -12,6 +12,11 @@ Page({
 
   onLoad(query) {
     const promotionID = parseInt(query.promotion_id);
+    console.log("swiper image click:", promotionID)
+    // await wx.cloud.database().collection("swiper_images").get().then((res) => {
+    //   supIdList = res.data[0].problems_id
+      
+    // })
     this.getGoodsList(promotionID);
   },
 

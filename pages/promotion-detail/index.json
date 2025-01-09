@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "营销详情",
+  "navigationBarTitleText": "热点问题详情",
   "usingComponents": {
     "t-toast": "tdesign-miniprogram/toast/toast",
     "t-image": "/components/webp-image/index",

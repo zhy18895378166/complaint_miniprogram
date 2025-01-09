@@ -1,0 +1,15 @@
+<t-cell class="mb-16" title="选择主分类" arrow hover note="{{categoryText}}" bind:click="onCityPicker" />
+
+<t-picker
+  visible="{{categoryVisible}}"
+  value="{{categoryValue}}"
+  data-key="category"
+  title="选择主分类"
+  cancelBtn="取消"
+  confirmBtn="确认"
+  bindchange="onPickerChange"
+  bindpick="onColumnChange"
+  bindcancel="onPickerCancel"
+>
+  <t-picker-item options="{{mainCategoriesName}}" />
+</t-picker>

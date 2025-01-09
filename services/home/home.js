@@ -47,12 +47,36 @@ function mockFetchHome() {
   });
 }
 
+async function fetchSwiperImagesFromCloud() {
+  let goods_list = []
+  let supIdList
+  const db = wx.cloud.database()
+  const _ = db.command
+
+  await db.collection("swiper_images").get().then((res) => {
+    supIdList = res.data[0].problems_id
+    console.log(supIdList)
+  })
+
+  await db.collection("all_problems").where({
+    // 需满足 _.in(supIdList)
+    spuId: _.in(supIdList)
+  }).get().then((res) => {
+    res.data.map((item) => {
+      goods_list.push(item.primaryImage)
+    })
+  })
+  //console.log("swiper image list:", goods_list)
+  return goods_list
+}
+
 /** 获取首页数据 */
 export function fetchHome() {
   if (config.useMock) {
     return mockFetchHome();
   }
+
   return new Promise((resolve) => {
-    resolve(getImagesUrls("images/home_swiper"));
+    resolve(fetchSwiperImagesFromCloud());
   })
 }

@@ -36,6 +36,13 @@ Component({
     }
   },
   methods: {
+    navToCategoryCreate(e) {
+      const btn_name = e.target.dataset.id
+      wx.navigateTo({
+        //url: `/pages/order/createComment/index?orderNo=${this.orderNo}`,
+        url: `/pages/goods/category/create/index?btn=${btn_name}`,
+      });
+    },
     onParentChange(event) {
       this.setActiveKey(event.detail.index, 0).then(() => {
         this.triggerEvent('change', [
@@ -53,7 +60,6 @@ Component({
       });
     },
     changCategory(event) {
-      console.log("dddd",event)
       const { item } = event.currentTarget.dataset;
       this.triggerEvent('changeCategory', {
         item,

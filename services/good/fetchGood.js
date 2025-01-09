@@ -11,7 +11,7 @@ async function fetchGoodDetails(ID = 0) {
   let ret;
   const db = wx.cloud.database()
   const _ = db.command
-  await db.collection("homelist").where({
+  await db.collection("all_problems").where({
     // 需满足 _.eq(ID)
     spuId: _.eq(ID)
   }).get().then((res) => {
@@ -25,7 +25,7 @@ async function fetchGoodDetails(ID = 0) {
       }
     })
   })
-  console.log("get goods list:", ret)
+  //console.log("get goods list:", ret)
   return ret
 }
 

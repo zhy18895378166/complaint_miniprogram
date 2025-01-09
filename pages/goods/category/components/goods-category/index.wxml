@@ -1,15 +1,14 @@
 <view class="goods-category custom-class">
 	<c-sidebar custom-class="custom-sidebar" bindchange="onParentChange" activeKey="{{activeKey}}">
-		<button type="primary" class="category-add" wx:if="{{isAdministrator}}">添加主分类</button>
     <c-sidebar-item
 		  wx:for="{{ category }}"
 		  wx:key="index"
 		  title="{{ item.name }}"
 		  disabled="{{ item.disabled }}"
 		/>
+    <button type="primary" class="category-add-main" data-id="main" bindtap="navToCategoryCreate">添加</button>
 	</c-sidebar>
 	<view class="goods-category__right">
-    <button type="primary" class="category-add" wx:if="{{isAdministrator}}">添加子分类</button>
 		<c-tabbar
 		  wx:if="{{isSlotRight}}"
 		  activeKey="{{subActiveKey}}"
@@ -42,7 +41,7 @@
 					</view>
 				</block>
 				<view class="goods-category-normal-item-second-container" wx:if="{{level === 2}}">
-					<block wx:for="{{category[activeKey].children}}" wx:key="index">
+          <block wx:for="{{category[activeKey].children}}" wx:key="index">
 						<view
 						  class="goods-category-normal-item-second-container-item"
 						  wx:for-key="index"
@@ -58,6 +57,7 @@
 				</view>
 			</view>
 		</view>
+    <button type="primary" class="category-add" data-id="sub" bindtap="navToCategoryCreate">添加子分类</button>
 	</view>
 </view>
 

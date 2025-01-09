@@ -17,13 +17,22 @@ Page({
   onShow() {
     this.getTabBar().init();
   },
-  onChange(e) {
-    console.log(e)
+  onChange(event) {
+    const target = event.detail;
+    const problemsIdList = target.item.problemsIdList
+    //console.log("which target click:", target)
     wx.navigateTo({
-      url: '/pages/goods/list/index',
+      url: `/pages/goods/list/index?problemsIdList=${JSON.stringify(problemsIdList)}`,
     });
   },
   onLoad() {
     this.init(true);
   },
+
+  // navToCategoryCreate() {
+  //   wx.navigateTo({
+  //     //url: `/pages/order/createComment/index?orderNo=${this.orderNo}`,
+  //     url: '/pages/goods/category/create/index',
+  //   });
+  // },
 });

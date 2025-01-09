@@ -99,6 +99,20 @@
     <view wx:if="{{details.videos.length > 0}}" wx:for="{{details.videos}}" wx:key="index">
       <video class="video-attr" src="{{item}}"></video>
     </view>
+
+    <!-- 上传问题详情图片和视频 -->
+    <view class="upload-container">
+      <view>添加详情图片和视频
+      </view>
+      <t-upload
+        media-type="{{['image','video']}}"
+        files="{{uploadFiles}}"
+        bind:remove="handleRemove"
+        bind:success="handleSuccess"
+        gridConfig="{{gridConfig}}"
+        imageProps="{{imageProps}}"
+      />
+    </view>
   </view>
   <view class="goods-bottom-operation">
     <buy-bar

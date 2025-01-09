@@ -8,6 +8,7 @@
     "pages/goods/list/index",
     "pages/goods/details/index",
     "pages/goods/category/index",
+    "pages/goods/category/create/index",
     "pages/goods/search/index",
     "pages/goods/result/index",
     "pages/cart/index",
@@ -44,10 +45,6 @@
       {
         "pagePath": "pages/goods/category/index",
         "text": "分类"
-      },
-      {
-        "pagePath": "pages/cart/index",
-        "text": "购物车"
       },
       {
         "pagePath": "pages/usercenter/index",

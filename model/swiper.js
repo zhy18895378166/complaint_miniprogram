@@ -38,11 +38,5 @@ const images = [
 ];
 
 export function genSwiperImageList() {
-  getImagesUrls("images").then(urls => {
-    ret =   urls;
-    console.log('Swiper Image List: ', urls);
-  })
-    .catch(error => {
-      console.error('Error: ', error)
-    })
+  return images;
 }

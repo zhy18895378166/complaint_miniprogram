@@ -28,12 +28,35 @@ function mockFetchGoodsList(params) {
   });
 }
 
+async function fetchGoodsListFromCloud(supIdList) {
+  let goods_list = []
+  let ret
+  const db = wx.cloud.database()
+  const _ = db.command
+  await db.collection("all_problems").where({
+    // 需满足 _.in(supIdList)
+    spuId: _.in(supIdList)
+  }).get().then((res) => {
+    res.data.map((item) => {
+      item.thumb = item.primaryImage;
+    })
+
+    ret = {
+      totalCount: 1,
+      spuList: res.data
+    }
+  })
+  //console.log("goods list:", ret)
+  return ret
+}
+
 /** 获取商品列表 */
 export function fetchGoodsList(params) {
   if (config.useMock) {
     return mockFetchGoodsList(params);
   }
+
   return new Promise((resolve) => {
-    resolve('real api');
+    resolve(fetchGoodsListFromCloud(params));
   });
 }

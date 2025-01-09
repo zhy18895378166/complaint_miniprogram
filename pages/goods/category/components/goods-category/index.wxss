@@ -1,5 +1,12 @@
 .category-add {
-  font-size: 25rpx;
+  font-size: 28rpx;
+  margin: 100rpx 50rpx 0rpx 50rpx;
+}
+
+.category-add-main {
+  font-size: 28rpx;
+  margin-top: 50rpx;
+  align-items: left;
 }
 
 .goods-category {

@@ -310,7 +310,7 @@ Page({
 
   getDetail(spuId) {
     fetchGood(spuId).then(res => {
-      console.log("getDetail: ", res)
+      //console.log("getDetail: ", res)
       getImagesAndVideos(res.desc_git_folder_path).then(([image, video]) => {
         res.desc = image;
         res.videos = video;

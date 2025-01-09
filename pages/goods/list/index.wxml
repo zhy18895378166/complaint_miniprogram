@@ -1,5 +1,5 @@
 <view class="goods-list-container">
-  <filter
+  <!-- <filter
     wr-class="filter-container"
     bind:change="handleFilterChange"
     layout="{{layout}}"
@@ -37,7 +37,7 @@
         </view>
       </view>
     </filter-popup>
-  </filter>
+  </filter> -->
   <view class="empty-wrap" wx:if="{{goodsList.length === 0 && hasLoaded}}">
     <t-empty t-class="empty-tips" size="240rpx" description="暂无相关商品" />
   </view>
@@ -49,6 +49,7 @@
       bind:addcart="handleAddCart"
     />
   </view>
-  <load-more wx:if="{{goodsList.length > 0}}" status="{{loadMoreStatus}}" no-more-text="没有更多了" />
+  <button type="primary" bind:tap="addProduct">添加问题</button>
 </view>
+
 <t-toast id="t-toast" />

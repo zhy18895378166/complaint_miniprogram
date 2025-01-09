@@ -56,7 +56,7 @@ Page({
     });
 
     fetchHome().then((swiper) => {
-      console.log(swiper)
+      //console.log(swiper)
       this.setData({
         imgSrcs: swiper,
         pageLoading: false,
@@ -91,7 +91,7 @@ Page({
 
     try {
       const nextList = await fetchGoodsList(pageIndex, pageSize);
-      console.log("result: ",nextList)
+      //console.log("result: ",nextList)
       this.setData({
         goodsList: fresh ? nextList : this.data.goodsList.concat(nextList),
         goodsListLoadStatus: 0,

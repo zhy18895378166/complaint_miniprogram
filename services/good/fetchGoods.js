@@ -21,10 +21,8 @@ function mockFetchGoodsList(pageIndex = 1, pageSize = 20) {
 
 async function fetchHomeListFromCloud(pageIndex = 1, pageSize = 20) {
   let goods_list = []
-  //wx.cloud.database().collection("problems_category").add({data: allGoods[0]})
-  //await wx.cloud.database().collection("homelist").add({data: good})
-  await wx.cloud.database().collection("homelist").get().then((res) => {
-    console.log("xxxxx",res)
+  await wx.cloud.database().collection("all_problems").get().then((res) => {
+    //console.log("xxxxx",res)
     res.data.map((item) => {
       goods_list.push({
               spuId: item.spuId,
@@ -33,7 +31,7 @@ async function fetchHomeListFromCloud(pageIndex = 1, pageSize = 20) {
       })
     })
   })
-  console.log("goods_list:", goods_list)
+  //console.log("goods_list:", goods_list)
   return goods_list
 }
 

@@ -69,7 +69,7 @@ Page({
     };
   },
 
-  async init(reset = true) {
+  async init(reset = true, id_list=[]) {
     const { loadMoreStatus, goodsList = [] } = this.data;
     const params = this.generalQueryData(reset);
     if (loadMoreStatus !== 0) return;
@@ -78,7 +78,11 @@ Page({
       loading: true,
     });
     try {
-      const result = await fetchGoodsList(params);
+      let result;
+      if (id_list.length > 0)
+        result = await fetchGoodsList(id_list);
+      else
+        result = await fetchGoodsList(params);
       const code = 'Success';
       const data = result;
       if (code.toUpperCase() === 'SUCCESS') {
@@ -124,9 +128,15 @@ Page({
     });
   },
 
-  onLoad(e) {
-    console.log("jump to this page", e)
-    //this.init(true);
+  addProduct(e) {
+    //todo 添加商品
+    console.log(e)
+  },
+
+  onLoad(option) {
+    let problemsIdList = JSON.parse(option.problemsIdList);
+    console.log("problems id list: ", problemsIdList)
+    this.init(true, problemsIdList);
   },
 
   onReachBottom() {

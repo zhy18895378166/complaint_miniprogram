@@ -10,15 +10,14 @@ function mockFetchGoodCategory() {
 
 async function fetchProblemsCategoryFromCloud() {
   let category_list = []
-  //wx.cloud.database().collection("problems_category").add({data: cate})
   await wx.cloud.database().collection("problems_category").get().then((res) => {
-    console.log("problems category: ",res)
+    //console.log("problems category: ",res)
     res.data.map((item) => {
-      console.log(item)
+      //console.log(item)
       category_list.push(item)
     })
   })
-  console.log("category_list:", category_list)
+  //console.log("category_list:", category_list)
   return category_list
 }
 
